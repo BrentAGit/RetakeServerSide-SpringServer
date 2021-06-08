@@ -1,11 +1,12 @@
 package thomasmore.be.restapplication.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Book {
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "bookid_gen")
+    @SequenceGenerator(name = "bookid_gen", sequenceName = "book_seq", allocationSize = 1)
     private int id;
     private String title;
     private String author;
