@@ -51,7 +51,13 @@ public class BookController {
     @DeleteMapping("/books/{id}")
     public void delete(@PathVariable int id) {
         logger.info("delete");
-        bookRepository.deleteById(id);
+        Optional<Book> bookFromDb = bookRepository.findById(id);
+        if (bookFromDb.isPresent()) {
+            bookRepository.deleteById(id);
+        }
+        else{
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, String.format("Book with id %d was not found in the database.", id));
+        }
     }
 
     @CrossOrigin
