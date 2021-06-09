@@ -65,6 +65,8 @@ public class BookController {
         if (bookFromDb.isPresent()) {
             return bookRepository.save(book);
         }
-        return null;
+        else{
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, String.format("Book with id %d was not found in the database.", id));
+        }
     }
 }
