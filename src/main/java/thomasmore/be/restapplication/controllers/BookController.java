@@ -20,9 +20,15 @@ public class BookController {
 
     @CrossOrigin
     @GetMapping("/books")
-    private List<Book> findAll() {
+    private Iterable<Book> findAll(@RequestParam(required = false) String titleKeyWord) {
         logger.info("findAll");
-        return bookRepository.findAll();
+
+        if (titleKeyWord == null){
+            return bookRepository.findAll();
+        }
+        else {
+            return bookRepository.findByTitleContaining(titleKeyWord);
+        }
     }
 
     @CrossOrigin

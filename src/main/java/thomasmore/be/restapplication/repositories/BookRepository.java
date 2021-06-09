@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface BookRepository extends CrudRepository<Book, Integer> {
     List<Book> findAll();
+
+    Iterable<Book> findByTitleContaining(String titleKeyWord);
 }
