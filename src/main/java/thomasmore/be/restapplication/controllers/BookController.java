@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.*;
 import thomasmore.be.restapplication.model.Book;
 import thomasmore.be.restapplication.repositories.BookRepository;
 
-import java.util.List;
 import java.util.Optional;
 
 @RestController
