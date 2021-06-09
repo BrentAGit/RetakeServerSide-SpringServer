@@ -8,6 +8,7 @@ import thomasmore.be.restapplication.model.Book;
 import thomasmore.be.restapplication.repositories.BookRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class BookController {
@@ -36,5 +37,17 @@ public class BookController {
     public void delete(@PathVariable int id) {
         logger.info("delete");
         bookRepository.deleteById(id);
+    }
+
+    @CrossOrigin
+    @PutMapping("/books/{id}")
+    public Book edit(@PathVariable int id, @RequestBody Book book) {
+        logger.info("edit");
+        if (book.getId()!=id) return null;
+        Optional<Book> bookFromDb = bookRepository.findById(id);
+        if (bookFromDb.isPresent()) {
+            return bookRepository.save(book);
+        }
+        return null;
     }
 }
