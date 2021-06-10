@@ -1,5 +1,7 @@
 package thomasmore.be.restapplication.model;
 
+import javax.validation.constraints.NotNull;
+
 import javax.persistence.*;
 
 @Entity
@@ -8,6 +10,8 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "bookid_gen")
     @SequenceGenerator(name = "bookid_gen", sequenceName = "book_seq", allocationSize = 1)
     private int id;
+
+    @NotNull
     private String title;
     private String author;
     private int releaseYear;
