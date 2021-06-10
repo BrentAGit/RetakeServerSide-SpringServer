@@ -56,4 +56,5 @@ yarn-error.log*
 
 .idea/
 /src/main/frontend/node_modules/
+/src/main/frontend/build/
 
