@@ -15,7 +15,7 @@ public class GenreController {
     @CrossOrigin
     @GetMapping("/genres")
     public Iterable<Genre> findAll() {
-        log.info("##### findAll Genres");
+        log.info("findAll Genres");
         return genreService.findAll();
     }
 }

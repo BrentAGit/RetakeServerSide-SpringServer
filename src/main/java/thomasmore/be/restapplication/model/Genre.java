@@ -16,5 +16,7 @@ public class Genre {
     private int id;
 
     @NotBlank(message="Genre name should not be blank")
-    private String genreName;
+    private String name;
+
+
 }
