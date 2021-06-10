@@ -19,7 +19,6 @@ public class BookController {
     @Autowired
     private BookRepository bookRepository;
 
-    @CrossOrigin
     @ApiOperation(value="Returns a list of all books stored in the database")
     @GetMapping("/books")
     private Iterable<Book> findAll(@RequestParam(required = false) String titleKeyWord) {
@@ -33,7 +32,6 @@ public class BookController {
         }
     }
 
-    @CrossOrigin
     @ApiOperation(value="Adds a book to the database")
     @PostMapping("/books")
     public Book create(@Valid @RequestBody Book book){
@@ -45,7 +43,6 @@ public class BookController {
         return bookRepository.save(book);
     }
 
-    @CrossOrigin
     @ApiOperation(value="Removes a book from the database")
     @DeleteMapping("/books/{id}")
     public void delete(@PathVariable int id) {
@@ -59,7 +56,6 @@ public class BookController {
         }
     }
 
-    @CrossOrigin
     @ApiOperation(value="Edits a book from the database")
     @PutMapping("/books/{id}")
     public Book edit(@PathVariable int id, @RequestBody Book book) {
@@ -74,4 +70,6 @@ public class BookController {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, String.format("Book with id %d was not found in the database.", id));
         }
     }
+
+
 }

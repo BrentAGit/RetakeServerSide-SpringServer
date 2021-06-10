@@ -15,3 +15,10 @@ INSERT INTO GENRE(id, name)
 
 INSERT INTO GENRE(id, name)
     VALUES(nextval('GENRE_SEQ'), 'Comedy');
+
+INSERT INTO BOOKSUSER (ID, USERNAME, PASSWORD, ROLE) VALUES
+    (nextval('USER_SEQ'), 'brent', '$2y$12$gnmcWdUuWhmAFTMBS6nIveCowoBLCZPjhHnjaAbs8VYFvs/TVIHwK', 'USER');
+
+INSERT INTO BOOKSUSER (ID, USERNAME, PASSWORD, ROLE) VALUES
+    (nextval('USER_SEQ'), 'admin', '$2y$12$oqbu45VPonB.UvQoCEXrL.MRY4QIkDuk9WPn.UgP//32sZWaAnq.m', 'ADMIN');
+

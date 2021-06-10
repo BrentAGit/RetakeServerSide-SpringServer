@@ -17,7 +17,7 @@ function CreateBookForm(props) {
             body: JSON.stringify(book)
         };
         try{
-            const response = await fetch ("/books", fetchOptions);
+            const response = await props.fetch("/books", fetchOptions);
             const body = await response.json();
             if(response.ok){
                 console.log(`createBook: received response ${JSON.stringify(body)}`);
