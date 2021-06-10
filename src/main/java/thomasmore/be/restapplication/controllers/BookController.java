@@ -10,6 +10,7 @@ import org.springframework.web.server.ResponseStatusException;
 import thomasmore.be.restapplication.model.Book;
 import thomasmore.be.restapplication.repositories.BookRepository;
 
+import javax.validation.Valid;
 import java.util.Optional;
 
 @RestController
@@ -37,7 +38,7 @@ public class BookController {
     @CrossOrigin
     @ApiOperation(value="Adds a book to the database")
     @PostMapping("/books")
-    public Book create(@RequestBody Book book){
+    public Book create(@Valid @RequestBody Book book){
         logger.info("create");
         if(bookRepository.findByTitle(book.getTitle()).isPresent())
         {
