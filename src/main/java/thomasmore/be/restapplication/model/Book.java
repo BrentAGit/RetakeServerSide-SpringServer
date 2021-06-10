@@ -1,7 +1,8 @@
 package thomasmore.be.restapplication.model;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 
 import javax.persistence.*;
 
@@ -13,9 +14,14 @@ public class Book {
     private int id;
 
     @NotBlank(message="Book title should not be blank")
-    @NotNull
     private String title;
+
+    @NotBlank(message="Book author should not be blank")
     private String author;
+
+    @NotBlank(message="Book year should not be blank")
+    @Max(value = 2021, message = "You are not from the future")
+    @Min(value = 0, message = "That is a very very very old book")
     private int releaseYear;
 
     public Book() {
