@@ -1,5 +1,6 @@
 package thomasmore.be.restapplication.model;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import javax.persistence.*;
@@ -11,6 +12,7 @@ public class Book {
     @SequenceGenerator(name = "bookid_gen", sequenceName = "book_seq", allocationSize = 1)
     private int id;
 
+    @NotBlank(message="Book title should not be blank")
     @NotNull
     private String title;
     private String author;
