@@ -73,7 +73,7 @@ function App() {
                     authorization: "Basic " + window.btoa(`${username}:${password}`)
                 },
             };
-            const response = await fetch(`/authenticate`, fetchOptions);
+            const response = await fetchWithCsrf(`/authenticate`, fetchOptions);
             const body = await response.json();
             setUsername(body.username);
             setErrorMessage();
@@ -94,7 +94,7 @@ function App() {
                     'X-Requested-With': 'XMLHttpRequest',
                 },
             };
-            const response = await fetch(`/authenticate`, fetchOptions);
+            const response = await fetchWithCsrf(`/authenticate`, fetchOptions);
             const body = await response.json();
             setUsername(body.username);
         } catch (e) {
