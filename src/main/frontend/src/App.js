@@ -7,8 +7,6 @@ import DeleteBookButton from "./components/DeleteBookButton";
 import LoginBanner from "./components/LoginBanner";
 import Login from "./components/Login";
 
-const csrfToken_keyInLocalStorage = "csrf_token";
-
 function App() {
     const [books, setBooks] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
@@ -16,7 +14,7 @@ function App() {
     const [isEdit, setIsEdit] = useState(false);
     const [errorMessage, setErrorMessage] = useState();
     const [username, setUsername] = useState();
-    const [csrfToken, setCsrfToken] = useState(() => localStorage.getItem(csrfToken_keyInLocalStorage));
+    const [csrfToken, setCsrfToken] = useState(undefined);
 
     async function fetchWithCsrf(url, fetchOptions) {
         console.log(`csrf token: ${csrfToken}`);
@@ -142,24 +140,16 @@ function App() {
     }
 
     useEffect(() => {
-        console.log(`useEffect: username ${username} - getBooks (only if username is set)`);
+        console.log(`useEffect: username ${username}`);
         if (username)
             getBooks();
-    }, [username, getBooks]);
+    }, [username]);
 
     useEffect(() => {
-        console.log(`useEffect: csrfToken ${csrfToken}: store in localStorage`);
-        if (csrfToken)
-            localStorage.setItem(csrfToken_keyInLocalStorage, csrfToken);
-        else
-            localStorage.removeItem(csrfToken_keyInLocalStorage);
-    }, [csrfToken]);
-
-
-    useEffect(() => {
-        console.log("useEffect: start app: try to refreshAuthentication if cookie is set");
-        refreshAuthentication();
-    }, [refreshAuthentication]);
+        console.log("useEffect: start");
+        if (document.cookie)
+            refreshAuthentication();
+    }, []);
 
   return (
     <div className="App">
