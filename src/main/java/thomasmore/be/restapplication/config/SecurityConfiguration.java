@@ -33,7 +33,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().anyRequest().authenticated();
         http.httpBasic();
         //http.formLogin();
-        http.csrf().csrfTokenRepository(csrfTokenRepository); //Stuurt csrf token naar front-end
+        http.csrf().csrfTokenRepository(csrfTokenRepository); //Stuurt csrf token naar front-end.
         http.cors();
     }
 
