@@ -7,19 +7,6 @@ import DeleteBookButton from "./components/DeleteBookButton";
 import LoginBanner from "./components/LoginBanner";
 import Login from "./components/Login";
 
-async function fetchWithCsrf(url, fetchOptions) {
-    const cookie = document.cookie.match(new RegExp('XSRF-TOKEN=([^;]+)'));
-    const csrfToken = cookie && cookie[1];
-    console.log(`fetchWithCredentials token=${csrfToken}`);
-    const headers = csrfToken ? {...fetchOptions.headers, 'X-XSRF-TOKEN': csrfToken} : fetchOptions.headers;
-    const optionsWithCredentials = {
-        ...fetchOptions,
-        'credentials': 'include',
-        headers
-    };
-    return await fetch(url, optionsWithCredentials);
-}
-
 function App() {
     const [books, setBooks] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
@@ -27,6 +14,28 @@ function App() {
     const [isEdit, setIsEdit] = useState(false);
     const [errorMessage, setErrorMessage] = useState();
     const [username, setUsername] = useState();
+    const [csrfToken, setCsrfToken] = useState(undefined);
+
+    async function fetchWithCsrf(url, fetchOptions) {
+        console.log(`csrf token: ${csrfToken}`);
+        const headers = csrfToken ? {...fetchOptions.headers, 'X-XSRF-TOKEN': csrfToken} : fetchOptions.headers;
+        const optionsWithCredentials = {
+            ...fetchOptions,
+            'credentials': 'include',
+            headers
+        };
+        return await fetch(url, optionsWithCredentials);
+    }
+
+    function showHeadersAndCookies(response) { //Haalt csrf token uit header
+        for (let [key, value] of response.headers) {
+            console.log(`--- response ${key} = ${value}`);
+        }
+        for (let cookie of document.cookie.split(";")) {
+            console.log(`--- cookie ${cookie}`);
+        }
+    }
+
 
     function addBook(book) {
         setBooks([...books, book]);
@@ -49,6 +58,7 @@ function App() {
                 },
             };
             const response = await fetchWithCsrf(`/books`, fetchOptions);
+            showHeadersAndCookies(response);
             const body = await response.json();
             console.log("Received response in getBooks...");
             setBooks(body);
@@ -62,6 +72,7 @@ function App() {
     }
 
     async function authenticate(username, password) {
+        console.log(`authentication: ${username}`);
         setIsLoading(true);
         try {
             const fetchOptions = {
@@ -73,8 +84,10 @@ function App() {
                     authorization: "Basic " + window.btoa(`${username}:${password}`)
                 },
             };
-            const response = await fetchWithCsrf(`/authenticate`, fetchOptions);
+            const response = await fetch(`/authenticate`, fetchOptions);
             const body = await response.json();
+            showHeadersAndCookies(response);
+            setCsrfToken(response.headers.get("x-xsrf-token") || csrfToken);
             setUsername(body.username);
             setErrorMessage();
         } catch (e) {
@@ -95,6 +108,7 @@ function App() {
                 },
             };
             const response = await fetchWithCsrf(`/authenticate`, fetchOptions);
+            setCsrfToken(response.headers.get("x-xsrf-token") || csrfToken);
             const body = await response.json();
             setUsername(body.username);
         } catch (e) {
@@ -113,6 +127,7 @@ function App() {
             const response = await fetchWithCsrf(`/logout`, fetchOptions);
             if (response.ok) {
                 setUsername(undefined);
+                setCsrfToken(undefined);
                 setErrorMessage();
             } else {
                 const body = await response.json();
