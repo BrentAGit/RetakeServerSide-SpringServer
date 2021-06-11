@@ -35,6 +35,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         //http.formLogin();
         http.csrf().csrfTokenRepository(csrfTokenRepository); //Stuurt csrf token naar front-end.
         http.cors();
+        http.csrf().ignoringAntMatchers("/h2-console/**");
+        http.headers().frameOptions().sameOrigin();
     }
 
     @Autowired
