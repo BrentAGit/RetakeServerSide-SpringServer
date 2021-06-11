@@ -24,7 +24,6 @@ public class Book {
     @NotBlank(message = "Book author should not be blank")
     private String author;
 
-    @NotBlank(message = "Book year should not be blank")
     @Max(value = 2021, message = "You are not from the future")
     @Min(value = 0, message = "That is a very very very old book")
     private int releaseYear;
