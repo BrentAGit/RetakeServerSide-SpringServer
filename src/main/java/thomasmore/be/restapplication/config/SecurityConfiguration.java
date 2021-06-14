@@ -21,7 +21,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception{
-        http.authorizeRequests().antMatchers("/").permitAll().and().authorizeRequests().anyRequest().authenticated();
+        http.authorizeRequests().antMatchers("/").permitAll();
+        http.authorizeRequests().antMatchers("/static/**");
+        http.authorizeRequests().anyRequest().authenticated();
         http.httpBasic();
         //http.formLogin();
         http.csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()); //Stuurt csrf token naar front-end
