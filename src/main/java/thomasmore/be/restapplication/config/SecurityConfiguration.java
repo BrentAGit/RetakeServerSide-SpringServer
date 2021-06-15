@@ -25,7 +25,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers("/static/**");
         http.authorizeRequests().anyRequest().authenticated();
         http.httpBasic();
-        //http.formLogin();
+        http.formLogin();
         http.csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()); //Stuurt csrf token naar front-end
     }
 
